@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\CloudFoundryServiceProvider;
+
 return [
 
     /*
@@ -175,8 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        App\Providers\DatabaseServiceProvider::class,
         App\Providers\CloudFoundryServiceProvider::class,
+        App\Providers\DatabaseServiceProvider::class,
 
     ],
 
