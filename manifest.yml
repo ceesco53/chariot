@@ -2,7 +2,8 @@
 defaults: &defaults
   memory: 128M
   instances: 1
-  buildpack: php_buildpack
+  buildpacks:
+  - https://github.com/cloudfoundry/php-buildpack.git
   services:
   - chariot-db
   - chariot-redis
