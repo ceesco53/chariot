@@ -11,3 +11,6 @@ cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORGANIZATION -s $CF_S
 
 # Deploy
 cf push --vars-file $SECRETS_FILE
+
+# cf create-service cleardb spark chariot-db
+# cf create-service rediscloud 30mb my-redis
