@@ -47,9 +47,15 @@ script:
   - vendor/bin/phpunit
 
 deploy:
-  provider: script
-  script: bash deploy.sh
-  skip_cleanup: true
-  on:
-    repo: ceesco53/chariot
-    branch: develop
+  - provider: script
+    script: bash deploy.sh
+    skip_cleanup: true
+    on:
+      repo: ceesco53/chariot
+      branch: develop
+  - provider: script
+    script: bash deploy.sh
+    skip_cleanup: true
+    on:
+      repo: ceesco53/chariot
+      branch: master
