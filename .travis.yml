@@ -1,0 +1,53 @@
+language: php
+
+php:
+  - 7.2
+
+services:
+  - redis-server
+
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+      - sourceline: deb https://packages.cloudfoundry.org/debian stable main
+        key_url: https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key
+    packages:
+      - mysql-server
+      - cf-cli
+
+dist: trusty
+
+sudo: required
+
+branches:
+  only:
+    - master
+    - develop
+
+cache:
+  directories:
+    - vendor
+    - node_modules
+
+install:
+  - composer self-update
+  - composer install --no-interaction
+  - npm install
+  - npm run prod
+
+before_script:
+  - mysql -e 'create database chariot_testing;'
+  - php artisan migrate --force --seed
+
+script:
+  - vendor/bin/phpcs
+  - vendor/bin/phpunit
+
+deploy:
+  provider: script
+  script: bash deploy.sh
+  skip_cleanup: true
+  on:
+    repo: ceesco53/chariot
+    branch: develop

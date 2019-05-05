@@ -1,0 +1,45 @@
+---
+defaults: &defaults
+  memory: 128M
+  instances: 1
+  buildpack: php_buildpack
+  services:
+  - chariot-db
+  - chariot-redis
+  env:
+    APP_DEBUG: ((APP_DEBUG))
+    APP_ENV: ((APP_ENV))
+    APP_KEY: ((APP_KEY))
+    APP_NAME: My App
+    APP_URL: ((APP_URL))
+    CACHE_DRIVER: redis
+    DB_CERT_PATH: /etc/ssl/certs
+    DB_CONNECTION: mysql
+    LOG_CHANNEL: errorlog
+    MAIL_DRIVER: ((MAIL_DRIVER))
+    MAIL_ENCRYPTION: tls
+    MAIL_HOST: ((MAIL_HOST))
+    MAIL_PASSWORD: ((MAIL_PASSWORD))
+    MAIL_PORT: ((MAIL_PORT))
+    MAIL_USERNAME: ((MAIL_USERNAME))
+    QUEUE_DRIVER: redis
+    REDIS_SCHEME: tls
+    SESSION_DRIVER: redis
+
+applications:
+- name: chariot-website
+  <<: *defaults
+  routes:
+  - route: ((route))
+
+- name: chariot-queue-worker
+  <<: *defaults
+  no-route: true
+  command: php artisan queue:work
+  health-check-type: process
+
+- name: chariot-scheduler
+  <<: *defaults
+  no-route: true
+  command: php artisan cf:run-scheduler
+  health-check-type: process
