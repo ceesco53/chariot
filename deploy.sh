@@ -9,7 +9,6 @@ php artisan cf:set-secrets --path=$SECRETS_FILE
 # Login to Cloud Foundry.
 cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORGANIZATION -s $CF_SPACE
 
-cf env chariot
 # Deploy
 # cf push --vars-file $SECRETS_FILE
 
